@@ -3,25 +3,59 @@
   <head>
     <meta charset="utf-8">
     <title>Joste</title>
+    <link rel="stylesheet" href="./css/main.css">
   </head>
   <body>
-    <h1>Here is some text!</h1>
-    <form class="requestForm">
-      <input type="text" name="httpAddress" placeholder="Address of HTTP Request..."><br>
-      <input type="text" name="type" placeholder="Type of HTTP Request..."><br>
-      <select name="httpType">
-        <option value="get">GET</option>
-        <option value="post">POST</option>
-        <option value="put">PUT</option>
-        <option value="delete">DELETE</option>
-      </select>
-      <input type="submit" name="submit" value="Send">
-    </form>
+    <div class="input container">
+      <div class="http input">
+        <input type="text" placeholder="Address" id="httpAddr" value="192.168.2.1">
+        <select id="httpType">
+          <option value="get">GET</option>
+          <option value="post">POST</option>
+          <option value="put">PUT</option>
+          <option value="delete">DELETE</option>
+        </select>
+      </div>
+        <textarea id="requestData" rows="2" cols="60"></textarea>
+      <input type="submit" id="submitButton" class="input_button" value="Submit" onclick="getHttp()">
+    </div>
+    <!-- <div class="data">
+      
+    </div> -->
+    <div class="container">
+      <textarea id="response" rows="20" cols="60"></textarea>
+    </div>
   </body>
 
   <script>
     const electron = require('electron');
     const {ipcRenderer} = electron;
+
+    var requestData;
+
+    var responseField = document.getElementById('response');
+
+    var getHttp = function(){
+      let httpType = document.getElementById("httpType").value;
+      let addr = document.getElementById("httpAddr").value;
+      addr = addr.match(/https?\:\/\//) ? addr : "http://" + addr;
+      console.log("Button clicked!");
+
+      let xhr = new XMLHttpRequest();
+      xhr.open(httpType,addr);
+      xhr.send(null);
+      xhr.onreadystatechange = function(){
+        if (xhr.readyState == 4) {
+          console.log("Ready State is 4");
+          if (xhr.status == 200) {
+            console.log("Status is 200");
+            console.log(xhr);
+            document.getElementById('response').value = xhr.responseText;
+          }
+        }
+      }
+
+    }
 
   </script>
 </html>
