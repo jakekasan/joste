@@ -6,6 +6,71 @@
     <link rel="stylesheet" href="./css/main.css">
   </head>
   <body>
+    <!-- "page" holds the containers for the parts of the app -->
+
+    <div class="page">
+
+      <!-- the title -->
+      <div class="container">
+        <a class="title">
+          JOSTE - Javascript pOST made in Electron...
+        </a>
+      </div>
+
+      <!-- http request type and address -->
+      <div class="container">
+        <div class="http">
+
+          <!-- drop-down menu to select the http type -->
+          <div class="input">
+            <!-- <div id="httpTypeSelected" class="label">
+              <a>PUSH</a>
+            </div> -->
+            <select id="httpSelect">
+              <option value="get">GET</option>
+              <option value="post">POST</option>
+              <option value="put">PUT</option>
+              <option value="delete">DELETE</option>
+            </select>
+            <!-- <div id="httpDropdown" class="dropdown">
+              <div class="dropitem">
+                Push
+              </div>
+              <div class="dropitem">
+                Pull
+              </div>
+              <div class="dropitem">
+                Put
+              </div>
+              <div class="dropitem">
+                Delete
+              </div>
+            </div> -->
+          </div>
+          <div class="input">
+            <input type="text" id="httpAddr" placeholder="Enter an address...">
+          </div>
+
+        </div>
+      </div>
+
+      <!-- http request data field -->
+      <div class="container">
+
+      </div>
+
+      <!-- buttons to send and add data (opens the add data window) -->
+      <div class="container">
+
+      </div>
+
+      <div class="container">
+
+      </div>
+    </div>
+
+
+<!--
     <div class="input container">
       <div class="http input">
         <input type="text" placeholder="Address" id="httpAddr" value="192.168.2.1">
@@ -19,12 +84,10 @@
         <textarea id="requestData" rows="2" cols="60"></textarea>
       <input type="submit" id="submitButton" class="input_button" value="Submit" onclick="getHttp()">
     </div>
-    <!-- <div class="data">
-      
-    </div> -->
+
     <div class="container">
       <textarea id="response" rows="20" cols="60"></textarea>
-    </div>
+    </div> -->
   </body>
 
   <script>
@@ -34,6 +97,25 @@
     var requestData;
 
     var responseField = document.getElementById('response');
+
+    var element = document.getElementById("httpDropdown");
+    element.onclick = function(){
+      if (element.style.display == "none") {
+        element.style.display = "block";
+        document.getElementById("httpTypeSelected").style.display = "none";
+      } else {
+        element.style.display = "none";
+        document.getElementById("httpTypeSelected").style.display = "block";
+      }
+    };
+
+    var httpTypes = document.getElementsByClassName("dropitem");
+    console.log(httpTypes);
+    for (var i = 0; i < httpTypes.length; i++) {
+      httpTypes[i].onclick = function(){
+        document.getElementById("httpTypeSelected").value = httpTypes[i].value;
+      };
+    }
 
     var getHttp = function(){
       let httpType = document.getElementById("httpType").value;
