@@ -9,14 +9,18 @@ let addWindow;
 
 // when app is ready
 app.on('ready',function(){
-  // main func
+
+  // create the main Window object
+
   mainWindow = new BrowserWindow({
     width:500,
     heigh:500
   });
 
+  // load the html file for the main window
+
   mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, "mainWindow.html"),
+    pathname: path.join(__dirname, "html/mainWindow.html"),
     protocol: "file:",
     slashes: true
   }));
@@ -35,6 +39,7 @@ app.on('ready',function(){
 // Add data to the request
 
 function createAddWindow(){
+  
   // create a window to input Data
   addWindow = new BrowserWindow({
     width: 300,
@@ -43,12 +48,12 @@ function createAddWindow(){
   });
 
   addWindow.loadURL(url.format({
-    pathname: path.join(__dirname, "addData.html"),
+    pathname: path.join(__dirname, "html/addData.html"),
     protocol: "file:",
     slashes: true
   }));
 
-  // collect the garbage!!
+  // delete the addWindow if its not needed anymore
 
   addWindow.on('close',function(){
     addWindow = null;
@@ -84,6 +89,8 @@ const mainMenuTemplate = [
     ],
   }
 ]
+
+// if we're on OSX, shift the toolbar
 
 if (process.platform == "darwin") {
   mainMenuTemplate.unshift({});
